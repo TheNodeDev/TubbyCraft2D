@@ -2,11 +2,8 @@ package tk.tubbygames.tubbycraft.gui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import tk.tubbygames.tubbycraft.*;
-
-import java.io.Console;
 
 public class GUiConsole extends GuiScreen {
     public static Rectangle ConsoleSize = new Rectangle(new Vector2(100, 100), new Vector2(400, 250));
@@ -48,7 +45,6 @@ public class GUiConsole extends GuiScreen {
             //Top Of Console
             batch.draw(TubbyAssets.LoadTexture("./tex/gui/consoletop.png"), ConsoleSize.Pos1.X, ConsoleSize.Pos1.Y + ConsoleSize.Pos2.Y, ConsoleSize.Pos2.X, 39);
             Utils.DrawColour(batch, Utils.Colour.CONSOLE1, ConsoleSize);
-
             //Draw Console Text
             TubbyCraft.font.draw(batch,
                     consoleText,
@@ -108,6 +104,17 @@ public class GUiConsole extends GuiScreen {
         if(isTyping)
         {
             consoleText+=character;
+        }
+    }
+
+    @Override
+    public void keyDown(int keycode) {
+        if(keycode == Input.Keys.ENTER) {
+            System.out.println("Executing command: " + consoleText);
+            consoleText = "";
+        }else if(keycode == Input.Keys.BACKSPACE)
+        {
+            consoleText = consoleText.substring(0, consoleText.length()-2);
         }
     }
 }
