@@ -51,12 +51,6 @@ public class TubbyCraft extends ApplicationAdapter {
 		cam.update();
 
 		aManager.finishLoading();
-		aManager.load("./tex/player/face.png", Texture.class);
-		aManager.load("./tex/tiles/cbbl1.png", Texture.class);
-		aManager.load("./tex/tiles/cbbl2.png", Texture.class);
-		aManager.load("./tex/tiles/sky.png", Texture.class);
-		aManager.load("./tex/gui/hotbar.png", Texture.class);
-		aManager.load("./tex/gui/hotbarSelector.png", Texture.class);
 		aManager.update();
 		aManager.finishLoading();
 		TileManager.GenerateRandomMap();
@@ -65,6 +59,8 @@ public class TubbyCraft extends ApplicationAdapter {
 		Inventory.Stacks[2] = new ItemStack(new ItemOakPlanks());
 		Inventory.Stacks[3] = new ItemStack(new ItemGrass());
 		Inventory.Stacks[4] = new ItemStack(new ItemJunglePlanks());
+
+		Gdx.input.setInputProcessor(new TubbyInputListner());
 	}
 
 	@Override

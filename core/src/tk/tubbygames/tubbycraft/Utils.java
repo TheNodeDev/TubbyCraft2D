@@ -6,7 +6,7 @@ public class Utils {
     public static enum Colour
     {
         CONSOLE1("./tex/colors/1.png"),
-        CONSOLE2("./tex/colors/2.png");
+        DEBUG("./tex/colors/2.png");
         public final String loc;
         private Colour(String loc)
         {
