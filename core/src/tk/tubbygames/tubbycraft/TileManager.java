@@ -3,8 +3,19 @@ package tk.tubbygames.tubbycraft;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import tk.tubbygames.tubbycraft.Items.ItemCobble;
+import tk.tubbygames.tubbycraft.Items.ItemStoneBrick;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class TileManager {
+    public static Map<String, Item> itemMap;
+    static {
+        itemMap = new HashMap<>();
+        itemMap.put("./tex/tiles/cbbl1.png", new ItemCobble());
+        itemMap.put("./tex/tiles/cbbl2.png", new ItemStoneBrick());
+    }
     public static Tile[][] TileMap = new Tile[128][128];
     public static int TileSize = 64;
     public static void SetTileSize(float val)
@@ -19,6 +30,7 @@ public class TileManager {
                 int rnd = TubbyCraft.rnd.nextInt(2);
                 TileMap[x][y] = new Tile("./tex/tiles/cbbl" + (rnd+1) + ".png");
                 TileMap[x][y].isFloor = TubbyCraft.rnd.nextBoolean();
+                TileMap[x][y].linkedItem = itemMap.get(TileMap[x][y].loc);
             }
         }
     }
@@ -42,19 +54,28 @@ public class TileManager {
                         int rnd = TubbyCraft.rnd.nextInt(2);
                         TileMap[x][y] = new Tile("./tex/tiles/cbbl" + (rnd+1) + ".png");
                         TileMap[x][y].isFloor = TubbyCraft.rnd.nextBoolean();
+                        TileMap[x][y].linkedItem = itemMap.get(TileMap[x][y]);
                     }
                     tile = TileMap[x][y];
+                    String destroyloc = "./tex/tiles/destroy_stage_" + (String.valueOf(tile.breakamount*10f).substring(0,1)) + ".png";
                     if(tile.isFloor) {
-                        if(drawfloors)
+                        if(drawfloors){
                             batch.draw(TubbyAssets.LoadTexture(tile.loc), Screenpos.X, Screenpos.Y, TileSize, TileSize);
+                            if(tile.breakamount > 0)
+                                batch.draw(TubbyAssets.LoadTexture(destroyloc), Screenpos.X, Screenpos.Y, TileSize, TileSize);
+                        }
                     }
                     else{
 
                         if(!drawfloors) {
                             batch.setColor(new Color(0.7f, 0.7f, 0.7f, 1f));
                             batch.draw(TubbyAssets.LoadTexture(tile.loc), Screenpos.X, Screenpos.Y + (TileSize * 0.6f), TileSize, TileSize);
+                            if(tile.breakamount > 0)
+                                batch.draw(TubbyAssets.LoadTexture(destroyloc), Screenpos.X, Screenpos.Y + (TileSize * 0.6f), TileSize, TileSize);
                             batch.setColor(new Color(0.3f, 0.3f, 0.3f, 1f));
                             batch.draw(TubbyAssets.LoadTexture(tile.loc), Screenpos.X, Screenpos.Y, TileSize, TileSize * 0.6f);
+                            if(tile.breakamount > 0)
+                                batch.draw(TubbyAssets.LoadTexture(destroyloc), Screenpos.X, Screenpos.Y, TileSize, TileSize * 0.6f);
                             batch.setColor(Color.WHITE);
                         }
                     }

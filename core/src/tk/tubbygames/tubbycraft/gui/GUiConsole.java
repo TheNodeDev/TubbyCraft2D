@@ -51,6 +51,17 @@ public class GUiConsole extends GuiScreen {
                     ConsoleSize.Pos1.X,
                     ConsoleSize.Pos1.Y-16
                 );
+            int i = 0;
+            for(String s : ConsoleManager.ConsoleText)
+            {
+                TubbyCraft.font.draw(
+                        batch,
+                        s,
+                        ConsoleSize.Pos1.X,
+                        ConsoleSize.Pos1.Y + ConsoleSize.Pos2.Y - (i*TubbyCraft.GetStringSize(s, TubbyCraft.font).Y)
+                );
+                i++;
+            }
         }
     }
 
@@ -111,10 +122,13 @@ public class GUiConsole extends GuiScreen {
     public void keyDown(int keycode) {
         if(keycode == Input.Keys.ENTER) {
             System.out.println("Executing command: " + consoleText);
+            ConsoleManager.ExecuteCommand(consoleText);
             consoleText = "";
         }else if(keycode == Input.Keys.BACKSPACE)
         {
-            consoleText = consoleText.substring(0, consoleText.length()-2);
+            try {
+                consoleText = consoleText.substring(0, consoleText.length() - 2);
+            }catch (Exception e){}
         }
     }
 }

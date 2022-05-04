@@ -5,13 +5,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
-import tk.tubbygames.tubbycraft.Items.*;
-import tk.tubbygames.tubbycraft.gui.GUiConsole;
+import tk.tubbygames.tubbycraft.Items.ItemWoodenPickaxe;
 import tk.tubbygames.tubbycraft.gui.GUiMainMenu;
 import tk.tubbygames.tubbycraft.gui.GuiScreen;
 
@@ -35,7 +33,7 @@ public class TubbyCraft extends ApplicationAdapter {
 
 	@Override
 	public void create () {
-		screen = new GUiConsole();
+		screen = null;
 		Size = new Vector2(1920, 1080);
 		batch = new SpriteBatch();
 		aManager = new AssetManager();
@@ -54,13 +52,10 @@ public class TubbyCraft extends ApplicationAdapter {
 		aManager.update();
 		aManager.finishLoading();
 		TileManager.GenerateRandomMap();
-		Inventory.Stacks[0] = new ItemStack(new ItemCobble());
-		Inventory.Stacks[1] = new ItemStack(new ItemStoneBrick());
-		Inventory.Stacks[2] = new ItemStack(new ItemOakPlanks());
-		Inventory.Stacks[3] = new ItemStack(new ItemGrass());
-		Inventory.Stacks[4] = new ItemStack(new ItemJunglePlanks());
+		Inventory.Stacks.add(new ItemStack(new ItemWoodenPickaxe()));
 
 		Gdx.input.setInputProcessor(new TubbyInputListner());
+		ConsoleManager.InitCommands();
 	}
 
 	@Override
@@ -73,6 +68,7 @@ public class TubbyCraft extends ApplicationAdapter {
 
 	@Override
 	public void render () {
+		System.out.println(Inventory.Stacks.get(0));
 		cam.update();
 		batch.setProjectionMatrix(cam.combined);
 		float dt = Gdx.graphics.getDeltaTime();
@@ -88,7 +84,7 @@ public class TubbyCraft extends ApplicationAdapter {
 		Player.DrawPlayer(batch);
 		TileManager.DrawToScreen(batch, false);
 		Inventory.DrawInventory(batch);
-
+		Inventory.UpdateItem(batch);
 		if(screen != null)
 			screen.onRender(batch);
 
@@ -119,11 +115,15 @@ public class TubbyCraft extends ApplicationAdapter {
 		if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_9))
 			Inventory.SelectedSlot = 8;
 
-		if(Gdx.input.isKeyJustPressed(Input.Keys.TAB)){
+		if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
 			screen = new GUiMainMenu();
 		}
 		if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
 			MouseManager.OnClick();
+		}
+		if(Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT)) {
+			if(Inventory.GetCurrentItem() != null)
+				Inventory.GetCurrentItem().ItemUse();
 		}
 
 		if(Gdx.input.isKeyJustPressed(Input.Keys.J))

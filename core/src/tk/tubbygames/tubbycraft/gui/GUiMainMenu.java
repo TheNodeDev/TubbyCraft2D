@@ -12,6 +12,7 @@ public class GUiMainMenu extends GuiScreen{
     Button exitButton = new Button( null, null, null);
     Button resumeButton = new Button( null, null, null);
     Button optionsButton = new Button( null, null, null);
+    int timeAlive = 0;
     public GUiMainMenu()
     {
         super(true);
@@ -23,7 +24,8 @@ public class GUiMainMenu extends GuiScreen{
     @Override
     public void onRender(SpriteBatch batch)
     {
-        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+        timeAlive++;
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) && timeAlive > 10){
             TubbyCraft.screen = null;
         }else{
             resumeButton.Draw(batch);

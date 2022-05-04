@@ -3,16 +3,28 @@ package tk.tubbygames.tubbycraft;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Inventory {
-    public static ItemStack[] Stacks = new ItemStack[9];
+    public static List<ItemStack> Stacks;
+    static {
+        Stacks = new ArrayList<ItemStack>();
+    }
     public static int SelectedSlot = 0;
     public static ItemStack GetCurrentItemStack()
     {
-        return Stacks[SelectedSlot];
+        return Stacks.get(SelectedSlot);
     }
     public static Item GetCurrentItem()
     {
-        return Stacks[SelectedSlot].ItemType;
+        if(SelectedSlot > Stacks.size()-1)
+            return null;
+        ItemStack stack = Stacks.get(SelectedSlot);
+
+        if(stack != null)
+            return stack.ItemType;
+        return null;
     }
     public static void DrawInventory(SpriteBatch batch)
     {
@@ -21,12 +33,10 @@ public class Inventory {
         //Drawing the Selector
         batch.draw(TubbyAssets.LoadTexture("./tex/gui/hotbarSelector.png"), (Gdx.graphics.getWidth()/4f) + ((Gdx.graphics.getWidth()/18f)*SelectedSlot), 0, 0.12f * Gdx.graphics.getWidth()/2f, 0.12f * Gdx.graphics.getWidth()/2f);
         Vector2 HotBarPos = new Vector2((Gdx.graphics.getWidth()/4f) + ((Gdx.graphics.getWidth()/18f)*SelectedSlot), 0);
-        for(int i = 0; i < 9; i++)
+        for(int i = 0; i < Math.min(Stacks.size(), 9); i++)
         {
-            ItemStack stack = Stacks[i];
+            ItemStack stack = Stacks.get(i);
             if(stack == null)
-                return;
-            if(stack.ItemType == null)
                 return;
 
             Item item = stack.ItemType;
@@ -48,5 +58,24 @@ public class Inventory {
 
             }
         }
+    }
+    public static void UpdateItem(SpriteBatch batch)
+    {
+        if(SelectedSlot > Stacks.size()-1)
+            return;
+        if(Stacks.get(SelectedSlot) != null)
+            Stacks.get(SelectedSlot).ItemType.Update(batch);
+    }
+    public static void AddItem(Item itemtype, int amount)
+    {
+        for(ItemStack s : Stacks)
+        {
+            if(s.ItemType.equals(itemtype))
+            {
+                s.Add(amount);
+                return;
+            }
+        }
+        Stacks.add(new ItemStack(itemtype));
     }
 }
