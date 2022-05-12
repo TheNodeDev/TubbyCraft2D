@@ -1,14 +1,10 @@
-package tk.tubbygames.tubbycraft;
+package tk.tubbygames.tubbycraft.world;
 
-import tk.tubbygames.tubbycraft.Tile;
-import tk.tubbygames.tubbycraft.TileManager;
-
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 
 public class MapParser {
     private static String[] TexIndex = {
+            null,
             "cbbl1",
             "cbbl2",
             "planks1",
@@ -22,6 +18,7 @@ public class MapParser {
             "grass"
     };
     public static Tile[][] ReadMapFile(String loc) throws IOException {
+        /*
         File file = new File(loc);
         byte[] FileARR = Files.readAllBytes(file.toPath());
         int width = (int)FileARR[0];
@@ -37,8 +34,12 @@ public class MapParser {
             }
         }
         return TileMap;
+
+         */
+        return null;
     }
     public static void SaveCurrentMap(String loc) throws IOException {
+        /*
         File file = new File(loc);
         int width = TileManager.TileMap.length;
         int height = TileManager.TileMap[0].length;
@@ -67,9 +68,12 @@ public class MapParser {
             }
         }
         Files.write(file.toPath(), FileARR);
+
+         */
     }
     public static Tile parseKey(int key)
     {
+        /*
         byte keyByte = (byte)key;
         Tile res = new Tile();
         byte keyunsin = keyByte;
@@ -80,5 +84,8 @@ public class MapParser {
             res.isFloor = false;
         res.loc = "./tex/tiles/" + TexIndex[(int)keyunsin] + ".png";
         return res;
+
+         */
+        return null;
     }
 }

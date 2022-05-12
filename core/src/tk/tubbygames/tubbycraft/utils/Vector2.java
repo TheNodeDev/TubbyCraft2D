@@ -1,4 +1,4 @@
-package tk.tubbygames.tubbycraft;
+package tk.tubbygames.tubbycraft.utils;
 
 import static java.lang.Math.*;
 

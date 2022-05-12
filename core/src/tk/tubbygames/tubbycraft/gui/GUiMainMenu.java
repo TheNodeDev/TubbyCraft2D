@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import tk.tubbygames.tubbycraft.TubbyCraft;
-import tk.tubbygames.tubbycraft.Vector2;
+import tk.tubbygames.tubbycraft.utils.Vector2;
 import tk.tubbygames.tubbycraft.gui.widgets.Button;
 
 public class GUiMainMenu extends GuiScreen{

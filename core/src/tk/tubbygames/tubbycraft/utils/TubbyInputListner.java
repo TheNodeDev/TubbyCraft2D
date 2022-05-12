@@ -1,6 +1,7 @@
-package tk.tubbygames.tubbycraft;
+package tk.tubbygames.tubbycraft.utils;
 
 import com.badlogic.gdx.InputProcessor;
+import tk.tubbygames.tubbycraft.TubbyCraft;
 
 public class TubbyInputListner implements InputProcessor {
     @Override

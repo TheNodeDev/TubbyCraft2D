@@ -1,5 +1,7 @@
 package tk.tubbygames.tubbycraft;
 
+import tk.tubbygames.tubbycraft.utils.Vector2;
+
 public class Rectangle {
     public Vector2 Pos1;
     public Vector2 Pos2;

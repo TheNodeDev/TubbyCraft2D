@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import tk.tubbygames.tubbycraft.*;
+import tk.tubbygames.tubbycraft.utils.Utils;
+import tk.tubbygames.tubbycraft.utils.Vector2;
 
 public class GUiConsole extends GuiScreen {
     public static Rectangle ConsoleSize = new Rectangle(new Vector2(100, 100), new Vector2(400, 250));

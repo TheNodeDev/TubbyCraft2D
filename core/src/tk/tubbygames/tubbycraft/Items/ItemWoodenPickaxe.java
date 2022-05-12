@@ -3,14 +3,13 @@ package tk.tubbygames.tubbycraft.Items;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import tk.tubbygames.tubbycraft.Item;
-import tk.tubbygames.tubbycraft.Tile;
+import tk.tubbygames.tubbycraft.world.Tile;
 
 public class ItemWoodenPickaxe extends Item {
     public ItemWoodenPickaxe()
     {
-        super(new Tile("./tex/tiles/planks1.png"),"./tex/tiles/planks1.png", 64);
-        this.assignedTile = new Tile("./tex/tiles/planks1.png");
+        super(new Tile("./tex/tiles/planks1.png", true),"./tex/tiles/planks1.png", 64);
+        this.assignedTile = new Tile("./tex/tiles/planks1.png", true);
         this.ItemTexture = "./tex/tiles/planks1.png";
         this.maxStack = 64;
     }

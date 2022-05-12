@@ -1,13 +1,12 @@
 package tk.tubbygames.tubbycraft.Items;
 
-import tk.tubbygames.tubbycraft.Item;
-import tk.tubbygames.tubbycraft.Tile;
+import tk.tubbygames.tubbycraft.world.Tile;
 
 public class ItemCobble extends Item {
     public ItemCobble()
     {
-        super(new Tile("./tex/tiles/cbbl1.png"),"./tex/tiles/cbbl1.png", 64);
-        this.assignedTile = new Tile("./tex/tiles/cbbl1.png");
+        super(new Tile("./tex/tiles/cbbl1.png", true),"./tex/tiles/cbbl1.png", 64);
+        this.assignedTile = new Tile("./tex/tiles/cbbl1.png", true);
         this.ItemTexture = "./tex/tiles/cbbl1.png";
         this.maxStack = 64;
     }

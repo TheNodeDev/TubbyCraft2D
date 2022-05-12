@@ -9,9 +9,12 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
-import tk.tubbygames.tubbycraft.Items.ItemWoodenPickaxe;
+import tk.tubbygames.tubbycraft.Items.*;
 import tk.tubbygames.tubbycraft.gui.GUiMainMenu;
 import tk.tubbygames.tubbycraft.gui.GuiScreen;
+import tk.tubbygames.tubbycraft.utils.TubbyInputListner;
+import tk.tubbygames.tubbycraft.utils.Vector2;
+import tk.tubbygames.tubbycraft.world.TileManager;
 
 import java.io.IOException;
 import java.util.Random;
@@ -53,6 +56,8 @@ public class TubbyCraft extends ApplicationAdapter {
 		aManager.finishLoading();
 		TileManager.GenerateRandomMap();
 		Inventory.Stacks.add(new ItemStack(new ItemWoodenPickaxe()));
+		Inventory.Stacks.add(new ItemStack(new ItemOakPlanks(), 64));
+		Inventory.Stacks.add(new ItemStack(new ItemCobble(), 64));
 
 		Gdx.input.setInputProcessor(new TubbyInputListner());
 		ConsoleManager.InitCommands();
@@ -68,7 +73,6 @@ public class TubbyCraft extends ApplicationAdapter {
 
 	@Override
 	public void render () {
-		System.out.println(Inventory.Stacks.get(0));
 		cam.update();
 		batch.setProjectionMatrix(cam.combined);
 		float dt = Gdx.graphics.getDeltaTime();
@@ -80,9 +84,7 @@ public class TubbyCraft extends ApplicationAdapter {
 		}
 		ScreenUtils.clear(121/255f, 166/255f, 255/255f, 1);
 		batch.begin();
-		TileManager.DrawToScreen(batch, true);
-		Player.DrawPlayer(batch);
-		TileManager.DrawToScreen(batch, false);
+		TileManager.DrawToScreen(batch);
 		Inventory.DrawInventory(batch);
 		Inventory.UpdateItem(batch);
 		if(screen != null)
@@ -126,11 +128,6 @@ public class TubbyCraft extends ApplicationAdapter {
 				Inventory.GetCurrentItem().ItemUse();
 		}
 
-		if(Gdx.input.isKeyJustPressed(Input.Keys.J))
-			MapParser.SaveCurrentMap("D:\\TGMap\\Output.tcm");
-		if(Gdx.input.isKeyJustPressed(Input.Keys.K))
-			TileManager.TileMap = MapParser.ReadMapFile("D:\\TGMap\\Output.tcm");
-
 		if(Gdx.input.isKeyPressed(Input.Keys.UP))
 			Camera.pos.Y-=PlayerSpeed*dt;
 		if(Gdx.input.isKeyPressed(Input.Keys.DOWN))
@@ -151,20 +148,22 @@ public class TubbyCraft extends ApplicationAdapter {
 
 
 		if(Gdx.input.isKeyJustPressed(Input.Keys.E))
-			TileManager.SetTileSize(TileManager.TileSize+5f);
+			TileManager.SetTileSize(GameSettings.TileSize+5f);
 
 		if(Gdx.input.isKeyJustPressed(Input.Keys.Q))
-			TileManager.SetTileSize(TileManager.TileSize-5f);
+			TileManager.SetTileSize(GameSettings.TileSize-5f);
+		if(Gdx.input.isKeyJustPressed(Input.Keys.R))
+			System.out.println("Yes");
 
 
 		if(Player.pos.X < 1)
 			Player.pos.X = 1;
 		if(Player.pos.Y < 1)
 			Player.pos.Y = 1;
-		if(Player.pos.X > TileManager.TileMap.length)
-			Player.pos.X = TileManager.TileMap.length;
-		if(Player.pos.Y > TileManager.TileMap[0].length)
-			Player.pos.Y = TileManager.TileMap[0].length;
+		if(Player.pos.X > TileManager.ChunkMap.length)
+			Player.pos.X = TileManager.ChunkMap.length;
+		if(Player.pos.Y > TileManager.ChunkMap[0].length)
+			Player.pos.Y = TileManager.ChunkMap[0].length;
 	}
 	public static void DrawCenteredString(SpriteBatch batch, String str, BitmapFont font)
 	{

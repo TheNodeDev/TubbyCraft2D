@@ -1,7 +1,10 @@
-package tk.tubbygames.tubbycraft;
+package tk.tubbygames.tubbycraft.Items;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import tk.tubbygames.tubbycraft.TubbyAssets;
+import tk.tubbygames.tubbycraft.TubbyCraft;
+import tk.tubbygames.tubbycraft.utils.Vector2;
 
 import java.util.ArrayList;
 import java.util.List;

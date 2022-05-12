@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import tk.tubbygames.tubbycraft.Rectangle;
 import tk.tubbygames.tubbycraft.TubbyAssets;
 import tk.tubbygames.tubbycraft.TubbyCraft;
-import tk.tubbygames.tubbycraft.Vector2;
+import tk.tubbygames.tubbycraft.utils.Vector2;
 
 public class Button {
     public static enum ButtonSize

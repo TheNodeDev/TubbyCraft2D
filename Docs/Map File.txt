@@ -1,0 +1,57 @@
+The world is split up into 3 things:
+    Tiles,
+    Tile Stacks &
+    Chunks
+
+Each Chunk is a 16x16 mesh of Tile Stacks.
+Each Tile Stack is an array of 16 Tiles.
+Each Tile has a Texture Location, and info on whether it's a full block or not.
+
+Each Tile is represented in 8 Bits (A Byte);
+
+Here is an example of a Full Block Grass tile:
+
+1001011
+
+The first bit is a boolean statement as to whether or not the block is full,
+if the Grass tile had been a float tile, the first bit would be a 0.
+
+The next 7 Bits allow us to show the Tile's Texture ID, Each Tile has a
+corresponding ID that lets us interpret the Tiles's Texture, Linked Item
+and behavior.
+
+Each TileStack is a 16 List of these Tiles, and therefore takes up ~16 Bytes.
+
+Each Chunk is a 16x16 Mesh of TileStacks, and therefore takes up ~4,096 Bytes.
+
+Chunks are layed out in the file every 4096 Bytes (Ignoring the file header),
+allowing for quick indexing of the file to find chunks without iteration.
+
+The File Header is Dynamically sized and contains the info on all the chunks
+already loaded, and included in the file.
+This allows for infinite worlds to be generated and loaded, as the chunks are
+not layed out in the file in perfect sequential order, and allows for the player
+to load, save, and reload worlds with only the necessary chunks being saved
+and loaded.
+
+The File Header also contains Player location and inventory data. The player's 
+location is saved using a 16 bit Integer that represents the index of the chunk
+the player is in, alongside 2 one byte Integers that represent the position of 
+the player within a chunk, to an accuracy of 255th of a chunk.
+
+The Inventory is split into ItemStacks. an ItemStack Contains an ID representing
+the Type of Item contained in the Stack, along with an int showing the amount of 
+said item is in the stack. Each ItemStack should only be 2 Bytes
+
+The Inventory segment of the header is 108 Bytes long, as it can represent the
+position of a single item in a single byte, with the X and Y components only
+taking up a single 'nibble' (1/2 a Byte), this is due to the inventory being
+limited to 9x4.
+
+
+it is layed out as:
+Player Chunk Location X   :         #4 Bytes
+Player Chunk Location Y   :         #4 Bytes
+Player Relative Location Y:         #1 Byte
+Player Relative Location Y:         #1 Byte
+Player Inventory          :         #108 Bytes
