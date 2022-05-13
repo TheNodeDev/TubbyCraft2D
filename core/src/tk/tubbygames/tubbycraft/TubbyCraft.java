@@ -128,13 +128,13 @@ public class TubbyCraft extends ApplicationAdapter {
 				Inventory.GetCurrentItem().ItemUse();
 		}
 
-		if(Gdx.input.isKeyPressed(Input.Keys.UP))
+		if(Gdx.input.isKeyPressed(Input.Keys.U))
 			Camera.pos.Y-=PlayerSpeed*dt;
-		if(Gdx.input.isKeyPressed(Input.Keys.DOWN))
+		if(Gdx.input.isKeyPressed(Input.Keys.J))
 			Camera.pos.Y+=PlayerSpeed*dt;
-		if(Gdx.input.isKeyPressed(Input.Keys.LEFT))
+		if(Gdx.input.isKeyPressed(Input.Keys.H))
 			Camera.pos.X+=PlayerSpeed*dt;
-		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+		if(Gdx.input.isKeyPressed(Input.Keys.K))
 			Camera.pos.X-=PlayerSpeed*dt;
 
 		if(Gdx.input.isKeyPressed(Input.Keys.W))
