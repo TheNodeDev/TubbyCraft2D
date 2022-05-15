@@ -9,8 +9,6 @@ import tk.tubbygames.tubbycraft.utils.Vector2;
 import tk.tubbygames.tubbycraft.worldgen.WorldGenConfig;
 import tk.tubbygames.tubbycraft.worldgen.WorldGenerator;
 
-import java.util.Map;
-
 public class TileManager {
     public static Chunk[][] ChunkMap = new Chunk[8][8];
     public static void SetTileSize(float val)
@@ -41,7 +39,6 @@ public class TileManager {
         );
         CameraChunkPosition.X = Math.max(0, CameraChunkPosition.X);
         CameraChunkPosition.Y = Math.max(0, CameraChunkPosition.Y);
-        Player.DrawPlayer(batch);
         for(int x = (int) CameraChunkPosition.X; x < Math.min(ScreenChunkWidth + CameraChunkPosition.X, ChunkMap.length); x++)
         {
             for(int y = (int) CameraChunkPosition.Y; y < Math.min(ScreenChunkHeight + CameraChunkPosition.Y, ChunkMap[0].length); y++)
@@ -49,5 +46,29 @@ public class TileManager {
                 ChunkMap[x][y].DrawChunk(batch, x, y);
             }
         }
+        Player.DrawPlayer(batch);
+    }
+
+    public static TileStack FromScreen(Vector2 ScreenPos)
+    {
+        Vector2 GlobalPos = new Vector2(
+                ScreenPos.X - Camera.pos.X*GameSettings.TileSize,
+                ScreenPos.Y - Camera.pos.Y*GameSettings.TileSize
+        );
+        Vector2 TilePos = new Vector2(
+                GlobalPos.X/GameSettings.TileSize,
+                (Gdx.graphics.getHeight()-GlobalPos.Y)/GameSettings.TileSize
+        );
+        Vector2 ChunkPos = new Vector2(
+                (float) Math.floor(TilePos.X/16f),
+                (float) Math.floor(TilePos.Y/16f)
+        );
+        Vector2 ChunkOffset = new Vector2(
+                (float) Math.floor(((TilePos.X/16f)-ChunkPos.X)*16),
+                (float) Math.floor(((TilePos.Y/16f)-ChunkPos.Y)*16)
+        );
+
+        ChunkMap[(int) ChunkPos.X][(int) ChunkPos.Y].Tiles[(int) ChunkOffset.X][(int) ChunkOffset.Y].Stack[0] = new Tile("./tex/tiles/cbbl2.png", false);
+        return null;
     }
 }

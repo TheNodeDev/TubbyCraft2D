@@ -153,17 +153,17 @@ public class TubbyCraft extends ApplicationAdapter {
 		if(Gdx.input.isKeyJustPressed(Input.Keys.Q))
 			TileManager.SetTileSize(GameSettings.TileSize-5f);
 		if(Gdx.input.isKeyJustPressed(Input.Keys.R))
-			System.out.println("Yes");
+			TileManager.FromScreen(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
 
 
-		if(Player.pos.X < 1)
-			Player.pos.X = 1;
-		if(Player.pos.Y < 1)
-			Player.pos.Y = 1;
-		if(Player.pos.X > TileManager.ChunkMap.length)
-			Player.pos.X = TileManager.ChunkMap.length;
-		if(Player.pos.Y > TileManager.ChunkMap[0].length)
-			Player.pos.Y = TileManager.ChunkMap[0].length;
+		if(Player.pos.X < 0)
+			Player.pos.X = 0;
+		if(Player.pos.Y < 0)
+			Player.pos.Y = 0;
+		if(Player.pos.X > TileManager.ChunkMap.length*16)
+			Player.pos.X = TileManager.ChunkMap.length*16;
+		if(Player.pos.Y > TileManager.ChunkMap[0].length*16)
+			Player.pos.Y = TileManager.ChunkMap[0].length*16;
 	}
 	public static void DrawCenteredString(SpriteBatch batch, String str, BitmapFont font)
 	{

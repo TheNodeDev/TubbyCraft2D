@@ -2,25 +2,19 @@ package tk.tubbygames.tubbycraft.gui.widgets;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import tk.tubbygames.tubbycraft.Rectangle;
 import tk.tubbygames.tubbycraft.TubbyAssets;
 import tk.tubbygames.tubbycraft.TubbyCraft;
 import tk.tubbygames.tubbycraft.utils.Vector2;
 
-public class Button {
-    public static enum ButtonSize
-    {
-        OneByOne,
-        TwoByOne,
-        ThreeByOne
-    }
-
+public class Slider {
     public String tag;
-    ButtonSize size;
+    Button.ButtonSize size;
     public Rectangle bounds;
-
-    public Button(String tag, ButtonSize size, Vector2 pos)
+    public float Value = 0.5f;
+    public Slider(String tag, float Value, Button.ButtonSize size, Vector2 pos)
     {
         if(tag == null)
             return;
@@ -45,6 +39,7 @@ public class Button {
     {
         if(tag == null)
             return;
+        this.HandleInput();
         String texName = "./tex/gui/button";
         switch (this.size)
         {
@@ -58,12 +53,21 @@ public class Button {
                 texName += "3.png";
                 break;
         }
+        batch.setColor(new Color(0.4f, 0.4f, 0.4f, 1f));
         batch.draw(
                 TubbyAssets.LoadTexture(texName),
                 this.bounds.Pos1.X,
                 this.bounds.Pos1.Y,
                 this.bounds.Pos2.X,
                 this.bounds.Pos2.Y
+        );
+        batch.setColor(Color.WHITE);
+        batch.draw(
+                TubbyAssets.LoadTexture("./tex/gui/slider.png"),
+                this.bounds.Pos1.X + (Value*this.bounds.Pos2.X)-12.5f,
+                this.bounds.Pos1.Y,
+                25,
+                100
         );
         TubbyCraft.font.draw(
                 batch,
@@ -72,7 +76,7 @@ public class Button {
                 this.bounds.Pos1.Y+(this.bounds.Pos2.Y/2)+(TubbyCraft.GetStringSize(tag, TubbyCraft.font).Y/2)
         );
     }
-    public boolean isClicked()
+    private boolean HandleInput()
     {
         if(tag == null)
             return false;
@@ -84,7 +88,12 @@ public class Button {
             );
             if(PosInBounds(Mousepos))
             {
-                return true;
+                Vector2 Localpos = new Vector2(
+                    Mousepos.X - bounds.Pos1.X,
+                        Mousepos.Y - bounds.Pos1.Y
+                );
+                Value = Localpos.X / bounds.Pos2.X;
+                System.out.println(Value);
             }
         }
         return false;
